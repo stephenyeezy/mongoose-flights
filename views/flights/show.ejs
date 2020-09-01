@@ -1,0 +1,99 @@
+<%- include('../partials/header') %>
+
+<wrapper id='details-grid'>
+    <div>Airline</div>
+    <div><%=flight.airline%></div>
+    <div>Flight Number</div>
+    <div><%=flight.flightNo%></div>
+    <div>Departure Date</div>
+    <div><%=flight.departs%></div>
+    <div>Departure Airport</div>
+    <div><%=flight.airport%></div>
+</wrapper>
+
+<% if (flight.destination.length > 0) { %>
+<h1>Destinations</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Arrival Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% flight.destinations.sort((a, b) => a.arrival - b.arrival) %>
+        <% flight.destinations.forEach((dest) => { %>
+        <tr>
+            <td><%=dest.airport%></td>
+            <td><%=dest.arrival%></td>
+            <td>
+                <form action="/destinations/<%= dest._id %>?_method=DELETE" method="POST">
+                    <button class="red-button" type="submit">X</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<% } %>
+
+<h1>Add Destinations</h1>
+<form method="POST" action="/flights/<%= flight._id %>/destinations">
+    <label for="destination">Destination
+        <select name="airport">
+            <% if (flight.airport !== "AUS" && flight.destinations.filter(e => e.airport === 'AUS').length === 0) { %> 
+                <option value="AUS">AUS</option>
+            <% } %>
+            <% if (flight.airport !== "DAL" && flight.destinations.filter(e => e.airport === 'DAL').length === 0) { %> 
+                <option value="DAL">DAL</option>
+            <% } %>
+            <% if (flight.airport !== "LAX" && flight.destinations.filter(e => e.airport === 'LAX').length === 0) { %> 
+                <option value="LAX">LAX</option>
+            <% } %>
+            <% if (flight.airport !== "SAN" && flight.destinations.filter(e => e.airport === 'SAN').length === 0) { %> 
+                <option value="SAN">SAN</option>
+            <% } %>
+            <% if (flight.airport !== "ATL" && flight.destinations.filter(e => e.airport === 'SEA').length === 0) { %> 
+                <option value="ATL">ATL</option>
+            <% } %>
+        </select>
+    </label>
+    <label for="date">Date:
+        <input type="datetime-local" name="arrival" value="<%= destDate %>">
+    </label>
+    <button class="submit-button"  type="submit">Submit</button>    
+</form>
+
+<% if (tickets.length > 0) { %>
+    <h1>Tickets</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Seats</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% tickets.sort((a, b) => a.price - b.price) %>
+            <% tickets.forEach((ticket) => { %>
+            <tr>
+                <td><%=ticket.seat%></td>
+                <td>$<%=ticket.price%>.00</td>
+                <td>
+                    <form action="/tickets/<%=ticket._id%>?_method=DELETE" method="POST">
+                        <button class="small-button red-button" type="submit">X</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+<br><br>
+
+<a href="/flights/<%=flight._id%>/tickets/new">Add Tickets</a>
+
+
+
+<%- include('../partials/footer') %>

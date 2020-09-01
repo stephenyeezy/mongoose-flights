@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+  <% if (flights.length > 0) { %>
+    <table style="width:100%">
+            <tr>
+              <th>Airline</th>
+              <th>Flight No.</th>
+              <th>Depart Date</th>
+              <th>View Details</th>
+            </tr>
+            <% flights.forEach(function(flight) { %>
+            <tr <%- flight.departs <= new Date() ? 'class="passed"' : '' %>>
+                <td><%= flight.airline %></td>
+                <td><%= flight.flightNo %></td>
+                <td><%= flight.departs %></td>
+                <td><a href="/flights/<%=flight._id%>">View</a></td>
+                <td>
+                  <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
+                    <button class="red-button" type="submit">X</button>
+                  </form>
+              </td>
+            </tr>
+            <%})%>
+          </table>
+    <% } else {%>
+      <h1>No Flights Have Been Booked</h1>
+      <% } %>
+<%- include('../partials/footer') %>

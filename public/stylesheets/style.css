@@ -1,0 +1,42 @@
+body {
+  padding: 50px;
+  font: 14px "Helvetica", Arial, sans-serif;
+  color:black;
+}
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+body {
+  display: flex;
+  flex-direction: column;;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  font-weight: 800;
+  font-size: 20px;
+}
+#details-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.passed {
+  color: red;
+}
+
+form {
+  font-size: 20px;
+}
+
+.red-button {
+  background-color: red;
+  color: black;
+  border-radius: 20%;
+}
