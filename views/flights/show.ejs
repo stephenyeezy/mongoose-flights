@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<wrapper id='details-grid'>
+<wrapper id='details'>
     <div>Airline</div>
     <div><%=flight.airline%></div>
     <div>Flight Number</div>
@@ -11,7 +11,7 @@
     <div><%=flight.airport%></div>
 </wrapper>
 
-<% if (flight.destination.length > 0) { %>
+<% if (flight.destinations.length > 0) { %>
 <h1>Destinations</h1>
 <table>
     <thead>
@@ -21,7 +21,6 @@
         </tr>
     </thead>
     <tbody>
-        <% flight.destinations.sort((a, b) => a.arrival - b.arrival) %>
         <% flight.destinations.forEach((dest) => { %>
         <tr>
             <td><%=dest.airport%></td>
@@ -58,9 +57,6 @@
                 <option value="ATL">ATL</option>
             <% } %>
         </select>
-    </label>
-    <label for="date">Date:
-        <input type="datetime-local" name="arrival" value="<%= destDate %>">
     </label>
     <button class="submit-button"  type="submit">Submit</button>    
 </form>
