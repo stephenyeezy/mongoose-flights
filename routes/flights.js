@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const flightsCtrl = require('../controllers/flights');
+const flightsCtrl = require('../controllers/flights.js');
 
 /* GET users listing. */
 router.get('/', flightsCtrl.index);

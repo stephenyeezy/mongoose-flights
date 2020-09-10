@@ -10,23 +10,19 @@ function create(req, res) {
     Flight.findById(req.params.id, function(err, flight) {
         flight.destinations.push(req.body);
         flight.save(function(err) {
-            res.redirect(`/flights/${req.params.id}`)
+            res.redirect(`/flights/${flight._id}`)
         });
     });
 }
 
 function deleteDestination(req, res) {
-    Flight.findById(req.params.flight)
-      .then((flight) => {
-        const idx = flight.destinations.findIndex(
-          (dest) => req.params.dest == dest._id
-        );
-        flight.destinations.splice(idx, 1);
-        flight.save(function (err) {
-          res.redirect(`/flights/${flight._id}`);
-        });
+  Flight.findById(req.params.flight, function(err, flight) {
+     let idx = flight.destinations.findIndex(function(obj) {
+          return (obj._id == req.params.dest)
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+      flight.destinations.splice(idx, 1);
+      flight.save(function(err) {
+          res.redirect(`/flights/${flight._id}`)
+      })
+  })
+}

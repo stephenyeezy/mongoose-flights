@@ -7,15 +7,15 @@
               <th>Depart Date</th>
               <th>View Details</th>
             </tr>
-            <% flights.forEach(function(flight) { %>
-            <tr <%- flight.departs <= new Date() ? 'class="passed"' : '' %>>
-                <td><%= flight.airline %></td>
-                <td><%= flight.flightNo %></td>
-                <td><%= flight.departs %></td>
-                <td><a href="/flights/<%=flight._id%>">View</a></td>
+            <% flights.forEach(function(f) { %>
+            <tr>
+                <td><%= f.airline %></td>
+                <td><%= f.flightNo %></td>
+                <td><%= f.departs %></td>
+                <td><a href="/flights/<%=f._id%>">View</a></td>
                 <td>
-                  <form action="/flights/<%=flight._id%>?_method=DELETE" method="POST">
-                    <button class="red-button" type="submit">X</button>
+                  <form action="/flights/<%=f._id%>?_method=DELETE" method="POST">
+                    <button class="delete-form" type="submit">X</button>
                   </form>
               </td>
             </tr>

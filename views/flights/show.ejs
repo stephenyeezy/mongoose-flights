@@ -11,23 +11,24 @@
     <div><%=flight.airport%></div>
 </wrapper>
 
-<% if (flight.destinations.length > 0) { %>
+<% if (flight.destinations.length) { %>
 <h1>Destinations</h1>
-<table>
+<table style="width:100%">
     <thead>
         <tr>
             <th>Destination</th>
-            <th>Arrival Time</th>
+            <th>Arrival</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        <% flight.destinations.forEach((dest) => { %>
+        <% flight.destinations.forEach((f) => { %>
         <tr>
-            <td><%=dest.airport%></td>
-            <td><%=dest.arrival%></td>
+            <td><%=f.airport%></td>
+            <td><%=f.arrival%></td>
             <td>
-                <form action="/destinations/<%= dest._id %>?_method=DELETE" method="POST">
-                    <button class="red-button" type="submit">X</button>
+                <form action="/flights/<%= f._id %>/<%= flight._id %>?_method=DELETE" method="POST">
+                    <button class="delete-form" type="submit">X</button>
                 </form>
             </td>
         </tr>
@@ -40,25 +41,21 @@
 <h1>Add Destinations</h1>
 <form method="POST" action="/flights/<%= flight._id %>/destinations">
     <label for="destination">Destination
-        <select name="airport">
-            <% if (flight.airport !== "AUS" && flight.destinations.filter(e => e.airport === 'AUS').length === 0) { %> 
-                <option value="AUS">AUS</option>
-            <% } %>
-            <% if (flight.airport !== "DAL" && flight.destinations.filter(e => e.airport === 'DAL').length === 0) { %> 
-                <option value="DAL">DAL</option>
-            <% } %>
-            <% if (flight.airport !== "LAX" && flight.destinations.filter(e => e.airport === 'LAX').length === 0) { %> 
-                <option value="LAX">LAX</option>
-            <% } %>
-            <% if (flight.airport !== "SAN" && flight.destinations.filter(e => e.airport === 'SAN').length === 0) { %> 
-                <option value="SAN">SAN</option>
-            <% } %>
-            <% if (flight.airport !== "ATL" && flight.destinations.filter(e => e.airport === 'SEA').length === 0) { %> 
+        <form id="add-destination-form" method="POST" action="/destinations/flights/<%= flight._id %>">
+            <label>Arrival:</label>
+            <input type="datetime-local" name="arrival" value="<%= departureDate %>">
+            <label>Airport:</label>
+            <select name="airport">
                 <option value="ATL">ATL</option>
-            <% } %>
-        </select>
+                <option value="ATL">AUS</option>
+                <option value="DFW">DFW</option>
+                <option value="DEN">DEN</option>
+                <option value="LAX">LAX</option>
+                <option value="SAN">SAN</option>
+            </select>
+            <input type="submit" value="Add Destination">
+        </form>
     </label>
-    <button class="submit-button"  type="submit">Submit</button>    
 </form>
 
 <% if (tickets.length > 0) { %>
